@@ -7,7 +7,7 @@ end
 
 abort = false
 -- detect if outdated script
-globalversion = 5
+globalversion = loadstring(game:HttpGet('https://raw.githubusercontent.com/laderite/zenx/main/version.lua'))()
 local promptOverlay = game.CoreGui:FindFirstChild("RobloxPromptGui"):FindFirstChild("promptOverlay")
 promptOverlay.DescendantAdded:Connect(function(Err)
     if Err.Name == "ErrorTitle" and getgenv().settings['autoreconnect'] then
