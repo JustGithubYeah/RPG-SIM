@@ -2,7 +2,7 @@ getgenv().settings = {
     --// Misc \\--
     ["autodrinkpotions"] = true,
     ["autoopencrystalbags"] = true,
-    ['leavetimer'] = 360, -- if u get stuck somehow | this is 10 mins but u should prob put it lower if u do raids quickly 
+    ['leavetimer'] = 3600, -- if u get stuck somehow | this is 10 mins but u should prob put it lower if u do raids quickly 
     ['autoreconnect'] = true, -- if u get teleport failed or internet or wtv it will just rejoin rpg sim
     ['teleportinairwhennomob'] = true, -- tp in the air so u dont die when there is currently no mob to target
     --// Auto join raid --\\
