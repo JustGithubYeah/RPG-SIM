@@ -83,4 +83,5 @@ getgenv().settings = {
             "listcankeepongoinglol",
         }
     },
+}
 loadstring(game:HttpGet('https://raw.githubusercontent.com/JustGithubYeah/RPG-SIM/main/GUI%20NEW'))()
