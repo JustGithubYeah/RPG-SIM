@@ -5,9 +5,6 @@ if workspace.Mobs:FindFirstChild("Queen's Egg") then
     repeat wait() until workspace.Mobs:FindFirstChild('Hive Guard') -- wanna kill the guards before it goes to the queen egg in hive raid
 end
 
-abort = false
--- detect if outdated script
-globalversion = loadstring(game:HttpGet('https://raw.githubusercontent.com/laderite/zenx/main/version.lua'))()
 local promptOverlay = game.CoreGui:FindFirstChild("RobloxPromptGui"):FindFirstChild("promptOverlay")
 promptOverlay.DescendantAdded:Connect(function(Err)
     if Err.Name == "ErrorTitle" and getgenv().settings['autoreconnect'] then
@@ -28,17 +25,6 @@ load('mod')
 load('log')
 load('commands')
 
-function detectOutdatedScript()
-    if not getgenv().settings or not getgenv().settings['version'] then
-        return true
-    end
-    if getgenv().settings['version'] ~= globalversion then
-        return true
-    end
-    return false
-end
-
-
 function getTypeOfServer()
     if workspace:FindFirstChild('BossSETTINGS') then
         return "Raid"
@@ -56,18 +42,6 @@ function getTableSize(table)
         count = count + 1
     end
     return count
-end
-
-function getRandomButtonResponse()
-    local s = {"ok i go now ty","ight thanks sexy man","alright bro thanks :))))","ty baby girl","Ok UwU","omg outdated script?!?! ok i go get new script cuz im pro :D"}
-    return tostring(s[math.random(1,getTableSize(s))])
-end
-
-if detectOutdatedScript() then
-    local prompt = loadstring(game:HttpGet('https://raw.githubusercontent.com/laderite/zenx/main/prompt.lua', true))()
-    prompt.createPrompt("OUTDATED SCRIPT", "Hi, you're using an outdated script. Go join the discord or head over to the v3rm thread to get the updated script.", getRandomButtonResponse(), true, function(close)
-        close()
-    end)
 end
 
 function invitePlayer(plr)
@@ -469,11 +443,6 @@ for _,v in pairs(workspace.Mobs:GetChildren()) do
     end
 end
 local startTime = tick()
-game.StarterGui:SetCore("SendNotification", {
-Title = "Discord";
-Text = "the discord is https://discord.com/invite/mwfAyYZ57P";
-Duration = math.huge;
-})
 
 coroutine.resume(coroutine.create(function()
 farmraid()
@@ -558,43 +527,6 @@ game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(v)
     end
 end)
 
-game:GetService("Players").LocalPlayer.PlayerGui.Chat.Frame.ChatChannelParentFrame["Frame_MessageLogDisplay"].Scroller.ChildAdded:connect(function(v)
-    if v:IsA('Frame') then
-        local text = v:WaitForChild('TextLabel')
-        if getgenv().settings['webhook']['enabled'] then
-            for _,items in pairs(getgenv().settings['webhook']['itemnotifier']) do
-                if string.find(text.Text, items) then
-                        local data = 
-                        {
-                            ["content"] = "@everyone";
-                            ["embeds"] = {{
-                                ["title"] = "Item Notifier"; 
-                                ["description"] = [[
-                                    **User**: ||]] .. game.Players.LocalPlayer.Name .. [[||
-                                    **Item Name**: ]] .. items,
-                                ["color"] = tonumber(0xcfd9de);
-                                ["footer"] = {
-                                    ["text"] = "RPG Simulator - Zen X";
-                                    ["icon_url"] = "https://cdn.discordapp.com/attachments/626185393707941889/940776650700914708/228-2280201_transparent-zen-circle-png-zen-circle-png-png-removebg-preview-removebg-preview.png"; -- The image icon you want your footer to have
-                                };
-                                ["timestamp"] = DateTime.now():ToIsoDate();
-                                
-                            }}
-                        }
-                    
-                    local newdata = game:GetService("HttpService"):JSONEncode(data)
-                    
-                    local headers = {
-                    ["content-type"] = "application/json"
-                    }
-                    request = http_request or request or HttpPost or syn.request
-                    local abcdef = {Url = getgenv().settings['webhook']['url'], Body = newdata, Method = "POST", Headers = headers}
-                    request(abcdef)
-                end
-            end
-        end
-    end
-end)
 
 wait(5)
 if getTypeOfServer() == "Raid" then
@@ -615,3 +547,5 @@ if getTypeOfServer() == "Raid" then
             wait()
             game:GetService("TeleportService"):Teleport("2990100290", game.Players.LocalPlayer)
         end
+    end
+end
