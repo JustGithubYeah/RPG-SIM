@@ -2,20 +2,6 @@ repeat wait() until game:IsLoaded()
 repeat wait() until game:GetService("Players").LocalPlayer:WaitForChild('Loaded').Value == true
 repeat wait() until (#game:GetService("Workspace"):WaitForChild('Mobs'):GetChildren()) > 0
 
-abort = false
--- detect if outdated script
-globalversion = loadstring(game:HttpGet('https://raw.githubusercontent.com/laderite/zenx/main/version.lua'))()
-local promptOverlay = game.CoreGui:FindFirstChild("RobloxPromptGui"):FindFirstChild("promptOverlay")
-promptOverlay.DescendantAdded:Connect(function(Err)
-    if Err.Name == "ErrorTitle" and getgenv().settings['autoreconnect'] then
-        if string.find(Err.Text, "Disconnected") or string.find(Err.Text, "Teleport Failed") then
-            game.Players.LocalPlayer:Kick("\nRejoining...")
-            wait()
-            game:GetService("TeleportService"):Teleport("2990100290", game.Players.LocalPlayer)
-        end
-    end
-end)
-
 local function load(package)
     loadstring(game:HttpGet('https://raw.githubusercontent.com/laderite/zenx/main/packages/' .. tostring(package) .. '.lua'))()
 end
@@ -24,17 +10,6 @@ end
 load('mod')
 load('log')
 load('commands')
-
-function detectOutdatedScript()
-    if not getgenv().settings or not getgenv().settings['version'] then
-        return true
-    end
-    if getgenv().settings['version'] ~= globalversion then
-        return true
-    end
-    return false
-end
-
 
 function getTypeOfServer()
     if workspace:FindFirstChild('BossSETTINGS') then
